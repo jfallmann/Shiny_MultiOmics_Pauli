@@ -17,15 +17,15 @@ suppressPackageStartupMessages({
 
 #### DATA FILES READING ####
 
-s1 <- fread("data/TableS1_fixed.tsv")
-s2 <- fread("data/TableS2_fixed.tsv")
-s3 <- fread("data/TableS3_fixed.tsv")
-mat <- read.delim("data/Fig4_AC_QExHFX2.padj05.lfc1.3in1c_2in2c.limma.deg.ch_kmeans.k5.tsv", row.names = 1)
+s1 <- fread("/srv/data/TableS1_fixed.tsv")
+s2 <- fread("/srv/data/TableS2_fixed.tsv")
+s3 <- fread("/srv/data/TableS3_fixed.tsv")
+mat <- read.delim("/srv/data/Fig4_AC_QExHFX2.padj05.lfc1.3in1c_2in2c.limma.deg.ch_kmeans.k5.tsv", row.names = 1)
 clusters <- mat[,19]
 clusters <- factor(clusters, levels=c(1,2,3,4,5))
 col_order <- c("Oocyte.1.1", "Oocyte.1.2", "Oocyte.1.3", "cell64.128.2.1", "cell64.128.2.2", "cell64.128.2.3", "Sphere.3.1", "Sphere.3.2", "Sphere.3.3", "Shield.4.1", "Shield.4.2", "Shield.4.3", "per75Epiboly.5.1", "per75Epiboly.5.2", "per75Epiboly.5.3", "dpf1.6.1", "dpf1.6.2", "dpf1.6.3")
-volc_data <- read.delim("data/AC_QExHFX2.padj05.lfc0.any2.limma.deg.1.tsv")
-uscs_data <- read.delim("data/mart_export.txt")
+volc_data <- read.delim("/srv/data/AC_QExHFX2.padj05.lfc0.any2.limma.deg.1.tsv")
+uscs_data <- read.delim("/srv/data/mart_export.txt")
 
 ############################
 

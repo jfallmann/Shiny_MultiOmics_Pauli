@@ -1,28 +1,31 @@
-FROM registry.hub.docker.com/library/ubuntu:24.04
+FROM rocker/shiny-verse:4.4.1
 ARG DEBIAN_FRONTEND=noninteractive
 ENV SHINY_LOG_STDERR=1
+ENV TZ=UTC
 
-RUN apt-get update && \
-    ln -s /usr/share/zoneinfo/Europe/Vienna /etc/localtime && \
-    apt-get install -y tzdata r-base gdebi-core wget libxml2-dev libfontconfig1-dev && \
-    R -e "install.packages('shiny', repos='https://cran.rstudio.com/')" && \
-    wget https://download3.rstudio.org/ubuntu-18.04/x86_64/shiny-server-1.5.22.1017-amd64.deb && \
-    gdebi -n shiny-server-1.5.22.1017-amd64.deb && \
-    rm shiny-server-1.5.22.1017-amd64.deb
+RUN apt-get update \     
+    && apt-get clean \
+    && apt-get autoremove -y \
+    && apt-get autoclean -y 
+    # && apt-get install -y tzdata wget libxml2-dev \
+    # && libfontconfig1-dev&& ln -s /usr/share/zoneinfo/Europe/Vienna /etc/localtime 
 
 # Application specific packages
-RUN mkdir -p /packages/R
+RUN mkdir -p /packages/R \
+    && mkdir -p /srv/data
 COPY R /packages/R
+COPY app/data /srv/data
 
 ENV R_REMOTES_UPGRADE="never"
-RUN	R -e "source('/packages/R/setup_R_env.R')"
+RUN	R -e "install.packages('renv', repos = 'https://cloud.r-project.org/')" \
+    && R -e "renv::restore('/packages/R')"
 
-RUN chown shiny:shiny /var/lib/shiny-server && \
-    rm -rf /srv/shiny-server/* && \
-    chown shiny:shiny /srv/shiny-server
+RUN chown shiny:shiny /var/lib/shiny-server \ 
+    && rm -rf /srv/shiny-server/* \
+    && chown shiny:shiny /srv/shiny-server
 
 ADD --chown=shiny:shiny ./entrypoint.sh /entrypoint.sh
-ADD --chown=shiny:shiny ./app /srv/shiny-server
+ADD --chown=shiny:shiny ./app/Chugunova_etal.R /srv/shiny-server/server.R
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 3838
