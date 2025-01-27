@@ -397,7 +397,7 @@ server <- function(input, output, session){
   
   significant_genes <- reactive({
     
-    uscs_data <- read.delim("mart_export.txt")
+    uscs_data <- read.delim("/srv/data/mart_export.txt")
     colnames(uscs_data) <- c("gene_id", "chr", "pos1", "pos2")
     volc_data <- merge(volc_data, uscs_data, by="gene_id", all.x=T)
     
