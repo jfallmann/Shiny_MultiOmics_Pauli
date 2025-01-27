@@ -24,9 +24,7 @@ RUN chown shiny:shiny /var/lib/shiny-server \
     && rm -rf /srv/shiny-server/* \
     && chown shiny:shiny /srv/shiny-server
 
-ADD --chown=shiny:shiny ./entrypoint.sh /entrypoint.sh
 ADD --chown=shiny:shiny ./app/Chugunova_etal.R /srv/shiny-server/server.R
-RUN chmod +x /entrypoint.sh
 
 EXPOSE 3838
 USER shiny
