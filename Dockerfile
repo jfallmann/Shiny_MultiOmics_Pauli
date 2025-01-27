@@ -31,5 +31,4 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 3838
 USER shiny
 
-# CMD R -e 'shiny::runApp("/srv/shiny-server/server.R", port = 3838, host = "0.0.0.0")'
-ENTRYPOINT ["/entrypoint.sh"]
+CMD R -e 'shiny::runApp("/srv/shiny-server/server.R", port = 3838, host = "0.0.0.0")'
