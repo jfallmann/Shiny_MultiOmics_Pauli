@@ -15,6 +15,8 @@ suppressPackageStartupMessages({
   library(plotly)
 })
 
+pdf(file = NULL)
+
 #### DATA FILES READING ####
 
 s1 <- fread("/srv/data/TableS1_fixed.tsv")
