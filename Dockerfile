@@ -12,9 +12,11 @@ RUN apt-get update \
 
 # Application specific packages
 RUN mkdir -p /packages/R \
-    && mkdir -p /srv/data
+    && mkdir -p /srv/data \
+    && mkdir -p /srv/docs
 COPY R /packages/R
 COPY app/data /srv/data
+COPY app/docs /srv/docs
 
 ENV R_REMOTES_UPGRADE="never"
 RUN	R -e "install.packages('renv', repos = 'https://cloud.r-project.org/')" \
@@ -24,9 +26,11 @@ RUN chown shiny:shiny /var/lib/shiny-server \
     && rm -rf /srv/shiny-server/* \
     && chown shiny:shiny /srv/shiny-server
 
-ADD --chown=shiny:shiny ./app/Chugunova_etal.R /srv/shiny-server/server.R
+ADD --chown=shiny:shiny ./app/mitozebra.R /srv/shiny-server/mitozebra.R
+ADD --chown=shiny:shiny ./app/server.R /srv/shiny-server/server.R
+ADD --chown=shiny:shiny ./app/ui.R /srv/shiny-server/ui.R
 
 EXPOSE 3838
 USER shiny
 
-CMD R -e 'shiny::runApp("/srv/shiny-server/server.R", port = 3838, host = "0.0.0.0")'
+CMD R -e 'shiny::runApp("/srv/shiny-server/mitozebra.R", port = 3838, host = "0.0.0.0")'
