@@ -1,0 +1,18 @@
+<h1>Welcome to the MitoZebra Visualization Tool</h1>
+<p>This page provides instructions on how to use the application effectively.</p>
+
+<h2>Tabs:</h2>
+<ul>
+    <li><strong>Data Exploration (Mt and Total):</strong> Explore the supplementary data using expression time lines and tables.</li>
+    <li><strong>Mt-Proteomics DEP:</strong> Visualize a volcano plot for the differential expression analysis between developmental timelines and search for particular genes.</li>
+    <li><strong>Interactive figure 4A (Heatmap):</strong> Interactively visualize the Heatmap and an associated table that shows the selected zone.</li>
+    <li><strong>Downloads:</strong> Download the desired data files for further analyses.</li>
+</ul>
+
+<div style="background: #f8f9fa; border-left: 4px solid #007bff; padding: 10px; margin: 10px 0;">
+	You can click on <strong>Embryo Stage Legend</strong> to see a representation of the different stages of zebrafish development.
+</div>
+
+
+<p>Inside each tab, you will find <i>Help</i> buttons that further explain the functionalities of each tab.</p>
+

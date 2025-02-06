@@ -1,0 +1,14 @@
+<h1>Interactive figure 4A (Heatmap)</h1>
+<p>This tab allows you to interactively explore a heatmap of differentially expressed mitochondrial proteins during zebrafish developmental stages. It corresponds to Fig. 4A of the accompanied manuscript.</p>
+
+<p>This tab is fairly straightforward, you start with the original heatmap and by dragging the mouse you can select an area of interest on the heatmap which will render a zoomed version next to the original.</p>
+
+<p>Once the selection is done, additionally to the zoom section, a table is rendered showing information about particular proteins that are inside that area.</p>
+
+<div style="background: #f8f9fa; border-left: 4px solid #007bff; padding: 10px; margin: 10px 0;"> In a
+	table, when clicking on the Gene ID (e.g. <i>ENSDARG00000043371</i>) you will be redirected to the
+	<strong>ENSEMBL</strong> entry for that gene, and when clicking on <i>UCSC Browser</I>, you will be
+	redirected to the <strong>USCS genome browser</strong> at the genomic position of the selected gene, which
+	shows additional tracks for RNA-Seq and Ribo-Seq data published previously and remapped to GRCz11.  </div>
+
+<p>Genes in the selected area will be summarized in the ready for download table below the heatmap area. Furthermore, you can also <strong>Save the heatmaps as png</strong> or <strong>Change settings</strong> with the <i>Configure Sub-heatmap</i> button</p>
