@@ -1,0 +1,27 @@
+<h1>Mt-Proteomics DEP</h1>
+<p>This tab allows you to explore differentially expressed mitochondrial proteins between zebrafish developmental stages.</p>
+<br>
+<p>This tab consists on two parts, the first one contains the volcano plot along with some settings you can use to customize the plot area.</p>
+
+<h2>Volcano plot and Settings</h2>
+<p>In the settings box you can switch between comparisons, as well as change the different thresholds of the volcano plot.</p>
+
+<p>Moreover, you have a <strong>search bar</strong> in which you can search one or more genes that will be highlighted in the volcano plot.</p>
+
+<div style="background: #f8f9fa; border-left: 4px solid #007bff; padding: 10px; margin: 10px 0;">
+	To further customize the volcano plot you can <i>click</I> the <strong>palette</strong> button below the plot and change the colors as needed.
+</div>
+
+<p>This customized plot can be downloaded using the Plotly standard features (clicking the camera icon showing above the plot when you hover). Zooming to an area of interest is possible by dragging a rectangle with your mouse over the desired area.</p>
+
+<h2>Significant Gene Table</h2>
+
+<p>This table shows entries for all the significant genes in the chosen comparison given the chosen thresholds along with further information.</p><br>
+
+
+<div style="background: #f8f9fa; border-left: 4px solid #007bff; padding: 10px; margin: 10px 0;"> In a
+	table, when clicking on the Gene ID (e.g. <i>ENSDARG00000043371</i>) you will be redirected to the
+	<strong>ENSEMBL</strong> entry for that gene, and when clicking on <i>UCSC Browser</I>, you will be
+	redirected to the <strong>USCS genome browser</strong> at the genomic position of the selected gene, which
+	shows additional tracks for RNA-Seq and Ribo-Seq data published previously and remapped to GRCz11.  </div>
+

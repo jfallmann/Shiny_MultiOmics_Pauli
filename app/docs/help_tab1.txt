@@ -1,0 +1,27 @@
+<h1>Data Exploration (Mt and Total)</h1>
+<p>This tab allows you to dynamically explore the different tables and compare expression data of mitochondrial and total proteins, Mt-phosphosites, as well as total gene expression.</p>
+<br>
+<p>This tab consists of three parts, the first one contains the search bar for your gene(s)/protein(s) of interest and a scale selector in which you can decide to show the expression in continuous scale  or in log-scale, the second part are the plots for all the data: Mt Proteomics, Mt Phosphoproteomics, Total Proteomics and Total Gene Expression, and the third part are tables with supplementary information regarding your gene(s)/protein(s) of interest. </p>
+
+<h2>Plots:</h2>
+<p>Line-plots allow you to compare expression of one or more gene(s)/protein(s) of interest in different datasets.</p><br>
+<ul>
+    <li><strong>MT Proteomics:</strong> Search one or more proteins and see a time line of mitochondrial protein expression during zebrafish development.</li>
+    <li><strong>MT Phosphoproteomics:</strong> Search one or more proteins and see mitochondrial expression of all the phosphosites of the proteins of interest during zebrafish development.</li>
+    <li><strong>Total Proteomics:</strong> Search for one or more proteins and see a time line of TOTAL protein expression during zebrafish development.</li>
+    <li><strong>Total Expression:</strong>Search for one or more genes and see a time line of total gene expression, as obtained from RNA-Seq, during zebrafish development.</li>
+</ul>
+
+
+<h2>Tables:</h2>
+<p>When searching for genes of interest, the tables will be rendered showing additional information regarding the same genes that are plotted in section Plots.</p><br>
+<p>Moreover, inside these tables you can find links to redirect you to UCSC and ENSEMBL for further analyses and additional information as described below.</p>
+
+<div style="background: #f8f9fa; border-left: 4px solid #007bff; padding: 10px; margin: 10px 0;"> In a
+	table, when clicking on the Gene ID (e.g. <i>ENSDARG00000043371</i>) you will be redirected to the
+	<strong>ENSEMBL</strong> entry for that gene, and when clicking on <i>UCSC Browser</I>, you will be
+	redirected to the <strong>USCS genome browser</strong> at the genomic position of the selected gene, which
+	shows additional tracks for RNA-Seq and Ribo-Seq data published previously and remapped to GRCz11.  </div>
+
+<p>Once the table contains all genes/proteins you were looking for, it is possible to download those table as <strong>CSV</strong>, or <strong>Excel</strong> file for further analysis.</p>
+
