@@ -14,6 +14,8 @@ suppressPackageStartupMessages({
   library(plotly)  
 })
 
+pdf(file = NULL)
+
 s1 <- fread("/srv/data/TableS1_fixed.tsv")
 s2 <- fread("/srv/data/TableS2_fixed.tsv")
 s3 <- fread("/srv/data/TableS3_fixed.tsv")
