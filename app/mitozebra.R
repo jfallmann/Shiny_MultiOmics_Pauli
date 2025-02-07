@@ -15,7 +15,7 @@ suppressPackageStartupMessages({
   
 })
 
-
+pdf(file = NULL)
 
 source("ui.R")
 source("server.R")
