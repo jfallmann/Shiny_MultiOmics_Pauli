@@ -1,20 +1,3 @@
-suppressPackageStartupMessages({
-  library(InteractiveComplexHeatmap)
-  library(ComplexHeatmap)
-  library(dplyr)
-  library(ggplot2)
-  library(data.table)
-  library(tidyverse)
-  library(bslib)
-  library(EnhancedVolcano)
-  library(shiny)
-  library(DT)
-  library(shinydashboard)
-  library(shinyWidgets)
-  library(plotly)  
-})
-
-pdf(file = NULL)
 
 s1 <- fread("/srv/data/TableS1_fixed.tsv")
 s2 <- fread("/srv/data/TableS2_fixed.tsv")
@@ -33,6 +16,7 @@ server <- function(input, output, session){
   
   highlight <- NULL
   
+  suppressWarnings({ 
   brush_action = function(df, output) {
     row_index = unique(unlist(df$row_index))
     column_index = unique(unlist(df$column_index))
@@ -56,6 +40,7 @@ server <- function(input, output, session){
       }
     })
   }
+  })
   
   
   s1_by_gene <- reactive({
@@ -112,7 +97,7 @@ server <- function(input, output, session){
         # Plot the mean expression line
         geom_line(data = data_avg, 
                   aes(x = StageGroup, y = MeanExpression, color = as.factor(str_to_title(Name)), group = str_to_title(Name)), 
-                  size = 1.2) +
+                  linewidth = 1.2) +
         
         # Add mean expression points (triangles)
         geom_point(data = data_avg, 
@@ -138,7 +123,7 @@ server <- function(input, output, session){
       # Plot the mean expression line
       geom_line(data = data_avg, 
                 aes(x = StageGroup, y = MeanExpression, color = as.factor(str_to_title(Name)), group = str_to_title(Name)), 
-                size = 1.2) +
+                linewidth = 1.2) +
       
       # Add mean expression points (triangles)
       geom_point(data = data_avg, 
@@ -164,24 +149,22 @@ server <- function(input, output, session){
     data<-s1_by_gene()
     data2 <- s2_by_gene()
     
-    colnames(uscs_data) <- c("Gene_stable_ID", "chr", "pos1", "pos2")
+    colnames(uscs_data) <- c("Gene_stable_ID", "Gene_name","chr", "pos1", "pos2")
     data <- merge(data, uscs_data, by="Gene_stable_ID", all.x=T)
     data <- cbind(data, data2)
     data_cols <- data[, c("Description", "Name", "Gene_stable_ID", "Transcript_stable_ID", "Protein_stable_ID", "Transcript_name", "Gene_Synonym", "Gene_type", "Gene_description", "chr", "pos1", "pos2",
                           "Egg_1", "Egg_2", "Egg_3", "2_1", "2_2", "2_3", "4_1", "4_2", "4_3", "6_1", "6_2", "6_3", "8_1", "8_2", "8_3", "24_1", "24_2", "24_3", 
                           "LFC_2hpf/Egg", "LFC_4hpf/Egg", "LFC_6hpf/Egg", "LFC_8hpf/Egg" ,"LFC_24hpf/Egg","Padj_2hpf/Egg", "Padj_4hpf/Egg", "Padj_6hpf/Egg", "Padj_8hpf/Egg", "Padj_24hpf/Egg")]
-    
     data_cols$Gene_stable_ID <- paste0(
       '<a href="https://www.ensembl.org/id/', data_cols$Gene_stable_ID, '" target="_blank">', 
       data_cols$Gene_stable_ID, 
       '</a>'
     )
     data_cols$Name <- paste0(
-      '<a href="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=danRer11&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr
-',
-      data_cols$chr,'%3A',data_cols$pos1,'-',data_cols$pos2  ,'" target="_blank">', data_cols$Name, '</a>'
+      '<a href="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=danRer11&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr',
+      data_cols$chr,'%3A',data_cols$pos1,'-',data_cols$pos2  ,'" target="_blank">', str_to_title(data_cols$Name), '</a>'
     )
-    data_cols$Name <- str_to_title(data_cols$Name)
+
     data_cols <- data_cols[, c( "Name", "Gene_stable_ID", "Transcript_stable_ID", "Protein_stable_ID", 
                                "2_1", "2_2", "2_3", "4_1", "4_2", "4_3", "6_1", "6_2", "6_3", "8_1", "8_2", "8_3", "24_1", "24_2", "24_3", 
                                "LFC_2hpf/Egg", "LFC_4hpf/Egg", "LFC_6hpf/Egg", "LFC_8hpf/Egg" ,"LFC_24hpf/Egg","Padj_2hpf/Egg", "Padj_4hpf/Egg", "Padj_6hpf/Egg", "Padj_8hpf/Egg", "Padj_24hpf/Egg")]
@@ -232,7 +215,7 @@ server <- function(input, output, session){
                    size=2, alpha=0.6) +
         geom_line(data=row_avg,
                   aes(x=StageGroup, y=StageMean, color=as.factor(Gene_pepG), group=Gene_pepG),
-                  size=1)+
+                  linewidth=1)+
         geom_point(data=row_avg,
                    aes(x=StageGroup, y=StageMean, color=as.factor(Gene_pepG)),
                    size=4, shape=17) +
@@ -256,7 +239,7 @@ server <- function(input, output, session){
                    size=2, alpha=0.6) +
         geom_line(data=row_avg,
                   aes(x=StageGroup, y=StageMean, color=as.factor(Gene_pepG), group=Gene_pepG),
-                  size=1)+
+                  linewidth=1)+
         geom_point(data=row_avg,
                    aes(x=StageGroup, y=StageMean, color=as.factor(Gene_pepG)),
                    size=4, shape=17) +
@@ -280,7 +263,7 @@ server <- function(input, output, session){
     req(input$genes)
     data<-s3_by_gene()
     data$Gene_pepG <- paste(str_to_title(data$Gene_name), data$pepG, sep="_")
-    colnames(uscs_data) <- c("Gene_stable_ID", "chr", "pos1", "pos2")
+    colnames(uscs_data) <- c("Gene_stable_ID","name", "chr", "pos1", "pos2")
     data <- merge(data, uscs_data, by="Gene_stable_ID", all.x=T)
     data_cols <- data[, c("Gene_pepG", "ProtID", "Modifications", "Gene_stable_ID", "Gene_name", "foldChange_4h", "foldChange_6h", "foldChange_1d", "chr", "pos1", "pos2", "2_1", "2_2", "2_3", "4_1", "4_2", "4_3", "6_1", "6_2", "6_3", "24_1", "24_2", "24_3")]
     colnames(data_cols)[colnames(data_cols)=="Gene_name"] <- "Name"
@@ -293,9 +276,8 @@ server <- function(input, output, session){
     )
     data_cols$Name <- paste0(
       '<a href="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=danRer11&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr',
-      data_cols$chr,'%3A',data_cols$pos1,'-',data_cols$pos2  ,'" target="_blank">', data_cols$Name, '</a>'
+      data_cols$chr,'%3A',data_cols$pos1,'-',data_cols$pos2  ,'" target="_blank">', str_to_title(data_cols$Name), '</a>'
     )
-    data_cols$Name <- str_to_title(data_cols$Name)
     data_cols <- data_cols[, c("Gene_pepG", "ProtID", "Modifications", "Gene_stable_ID", "Name", "foldChange_4h", "foldChange_6h", "foldChange_1d", "2_1", "2_2", "2_3", "4_1", "4_2", "4_3", "6_1", "6_2", "6_3", "24_1", "24_2", "24_3")]
     datatable(data_cols, escape = F, extensions = "Buttons", options = list(scrollX=T, paging=T, dom='tB', buttons = c("copy","csv", "excel")))
   })
@@ -332,7 +314,7 @@ server <- function(input, output, session){
     
     if (input$scale == "Log-scale") {
       plot <- ggplot(tot_prot_long, aes(x = StageGroup, y = Expression, group = str_to_title(Genes), color = str_to_title(Genes))) +
-        geom_line(size = 1.2) +
+        geom_line(linewidth = 1.2) +
         geom_point(size = 4, shape = 17) +
         labs(
           x = "Stage",
@@ -345,7 +327,7 @@ server <- function(input, output, session){
         scale_y_log10()
     } else {
       plot <- ggplot(tot_prot_long, aes(x = StageGroup, y = Expression, group = str_to_title(Genes), color = str_to_title(Genes))) +
-        geom_line(size = 1.2) +
+        geom_line(linewidth = 1.2) +
         geom_point(size = 4, shape = 17) +
         labs(
           x = "Stage",
@@ -365,19 +347,19 @@ server <- function(input, output, session){
     req(input$genes)
     data <- tot_exp_by_gene()
     
-    colnames(uscs_data) <- c("GeneID", "chr", "pos1", "pos2")
-    data <- merge(data, uscs_data, by="GeneID", all.x=T)
-    data_cols <- data[, c("GeneID", "Genes", "Accession", "Protein_group_accessions", "Description", "chr", "pos1", "pos2", "Egg", "X1hpf", "X16cell", "X2hpf", "X3hpf", "Oblong", "X4hpf", "X6hpf", "X1dpf", "Bridge")]
-    data_cols$GeneID <- paste0(
-      '<a href="https://www.ensembl.org/id/', data_cols$GeneID, '" target="_blank">', 
-      data_cols$GeneID, 
+    colnames(uscs_data) <- c("Gene_ID", "Genes", "chr", "pos1", "pos2")
+    data <- merge(data, uscs_data, by="Genes", all.x=T)
+    data_cols <- data[, c("Gene_ID", "Genes", "Accession", "Protein_group_accessions", "Description", "chr", "pos1", "pos2", "Egg", "X1hpf", "X16cell", "X2hpf", "X3hpf", "Oblong", "X4hpf", "X6hpf", "X1dpf", "Bridge")]
+    data_cols$Gene_ID <- paste0(
+      '<a href="https://www.ensembl.org/id/', data_cols$Gene_ID, '" target="_blank">', 
+      data_cols$Gene_ID, 
       '</a>'
     )
     data_cols$Genes <- paste0(
       '<a href="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=danRer11&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr',
       data_cols$chr,'%3A',data_cols$pos1,'-',data_cols$pos2  ,'" target="_blank">', data_cols$Genes, '</a>'
     )
-    data_cols <- data_cols[, c("GeneID", "Genes", "Accession", "Protein_group_accessions", "Description" , "Egg", "X1hpf", "X16cell", "X2hpf", "X3hpf", "Oblong", "X4hpf", "X6hpf", "X1dpf", "Bridge")]
+    data_cols <- data_cols[, c("Gene_ID", "Genes", "Accession", "Protein_group_accessions", "Description" , "Egg", "X1hpf", "X16cell", "X2hpf", "X3hpf", "Oblong", "X4hpf", "X6hpf", "X1dpf", "Bridge")]
     
     datatable(data_cols, escape=F, extensions = "Buttons", options = list(scrollX=T, paging=T, dom='tB', buttons = c("copy","csv", "excel")))
   })
@@ -407,7 +389,7 @@ server <- function(input, output, session){
     
     if (input$scale == "Log-scale") {
       plot <- ggplot(tot_exp_long, aes(x = StageGroup, y = Expression, group = Gene.name, color = Gene.name)) +
-        geom_line(size = 1.2) +
+        geom_line(linewidth = 1.2) +
         geom_point(size = 4, shape = 17) +
         labs(
           x = "Stage",
@@ -420,7 +402,7 @@ server <- function(input, output, session){
         scale_y_log10()
     } else {
       plot <- ggplot(tot_exp_long, aes(x = StageGroup, y = Expression, group = Gene.name, color = Gene.name)) +
-        geom_line(size = 1.2) +
+        geom_line(linewidth = 1.2) +
         geom_point(size = 4, shape = 17) +
         labs(
           x = "Stage",
@@ -440,7 +422,7 @@ server <- function(input, output, session){
     req(input$genes)
     data <- tot_by_gene()
     
-    colnames(uscs_data) <- c("GeneID", "chr", "pos1", "pos2")
+    colnames(uscs_data) <- c("GeneID", "Gene_name","chr", "pos1", "pos2")
     data <- merge(data, uscs_data, by="GeneID", all.x=T)
     data_cols <- data[, c("GeneID", "Gene.name", "Gene.type", "Gene.Synonym", "chr", "pos1", "pos2", "X1hpf", "X2hpf", "X3hpf", "X4hpf", "X8hpf", "X10hpf", "X28hpf")]
     data_cols$GeneID <- paste0(
@@ -461,7 +443,7 @@ server <- function(input, output, session){
   data_ht <- reactive({
     mat <- mat
   })
-  
+  suppressWarnings({
   observe({
     req(data_ht()) 
     mat <- data_ht() 
@@ -477,6 +459,7 @@ server <- function(input, output, session){
       heatmap_id = "ht", 
       brush_action = brush_action
     )
+    })
   })
   
   
@@ -484,7 +467,7 @@ server <- function(input, output, session){
   significant_genes <- reactive({
     
     uscs_data <- read.delim("/srv/data/mart_export.txt")
-    colnames(uscs_data) <- c("gene_id", "chr", "pos1", "pos2")
+    colnames(uscs_data) <- c("gene_id", "name", "chr", "pos1", "pos2")
     volc_data <- merge(volc_data, uscs_data, by="gene_id", all.x=T)
     
     sel=input$comparison
